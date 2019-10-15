@@ -33,7 +33,7 @@ import io.wolff.jedn.StackListener;
 import io.wolff.jedn.edn.EDNLexer;
 import io.wolff.jedn.edn.EDNParser;
 
-public class EDNTests {
+public class EDNDeserializationTests {
 	
 	private void verifyParse(Object expected, String edn) {
 		// TODO: don't need to construct a new object
