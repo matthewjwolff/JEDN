@@ -11,7 +11,7 @@ bool : BOOLEAN;
 
 stringlit : STRING;
 
-charlit : CHARLIT;
+charlit : '\\' ( ALPHA | CHARNAME); // TODO unicode;
 
 discard : '#_' element;
 
@@ -56,8 +56,6 @@ symbol : ALPHA+;
 BEGINSPECIAL : [\-+.];
 
 STRING :  '"' .*? '"';
-
-CHARLIT : '\\' ( ALPHA | CHARNAME); // TODO unicode
 
 ALPHA : [a-z] | [A-Z];
 

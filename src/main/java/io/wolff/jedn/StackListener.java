@@ -28,9 +28,11 @@ import java.util.UUID;
 import java.util.function.Function;
 
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
 import io.wolff.jedn.edn.EDNBaseListener;
 import io.wolff.jedn.edn.EDNParser.BoolContext;
+import io.wolff.jedn.edn.EDNParser.CharlitContext;
 import io.wolff.jedn.edn.EDNParser.FloatlitContext;
 import io.wolff.jedn.edn.EDNParser.IntlitContext;
 import io.wolff.jedn.edn.EDNParser.KeywordContext;
@@ -169,6 +171,30 @@ public class StackListener extends EDNBaseListener {
 			stack.add(new UnknownTag(symbol.name, val));
 		} else {
 			stack.add(processor.apply(val));
+		}
+	}
+
+	@Override
+	public void exitCharlit(CharlitContext ctx) {
+		TerminalNode node = ctx.ALPHA();
+		if(node!=null) {
+			stack.add(node.getText().charAt(0));
+		} else {
+			node = ctx.CHARNAME();
+			switch(node.getText()) {
+			case "newline":
+				stack.add('\n');
+				break;
+			case "return":
+				stack.add('\r');
+				break;
+			case "space":
+				stack.add(' ');
+				break;
+			case "tab":
+				stack.add('\t');
+				break;
+			}
 		}
 	}
 	

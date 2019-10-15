@@ -53,7 +53,6 @@ public class EDNTests {
 		verifyParse("Test", "\"Test\"");
 		verifyParse(123, "123");
 		verifyParse(12.5, "12.5");
-		// TODO: char lit
 		verifyParse(new EDNSymbol("symbol"), "symbol");
 //		// TODO: more symbol cases
 		verifyParse(new HashSet<EDNSymbol>(Arrays.asList(new EDNSymbol("a"), new EDNSymbol("b"))), "#{a b}");
@@ -61,6 +60,16 @@ public class EDNTests {
 		expected.put("e", 4);
 		verifyParse(expected, "{\"e\" 4}");
 		verifyParse(UUID.fromString("f81d4fae-7dec-11d0-a765-00a0c91e6bf6"), "#uuid \"f81d4fae-7dec-11d0-a765-00a0c91e6bf6\"");
+	}
+	
+	@Test
+	public void testCharacterLiterals() {
+		verifyParse('c', "\\c");
+		verifyParse('\n', "\\newline");
+		verifyParse('\r', "\\return");
+		verifyParse('\t', "\\tab");
+		verifyParse(' ', "\\space");
+		// TODO: unicode
 	}
 
 }
